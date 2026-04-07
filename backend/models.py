@@ -28,6 +28,8 @@ class Building(Base):
     name = Column(String, nullable=False)
     location = Column(String)
 
+    resource_readings = relationship("ResourceReading", back_populates="building")
+
 # Resource Readings Table
 class ResourceReading(Base):
     __tablename__ = "resource_readings"
@@ -36,9 +38,9 @@ class ResourceReading(Base):
     building_id = Column(Integer, ForeignKey("buildings.id"))
     type = Column(Enum(ResourceType))
     value = Column(Float)
-    timestamp = Column(DateTime)
+    ts = Column(DateTime)
 
-    building = relationship("Building")
+    building = relationship("Building", back_populates="resource_readings")
 
 # Alerts Table
 class Alert(Base):
@@ -48,6 +50,7 @@ class Alert(Base):
     building_id = Column(Integer, ForeignKey("buildings.id"))
     message = Column(String)
     created_at = Column(DateTime)
+    building = relationship("Building")
 
 # Reports Table
 class Report(Base):
@@ -56,6 +59,7 @@ class Report(Base):
     id = Column(Integer, primary_key=True)
     generated_by = Column(Integer, ForeignKey("users.id"))
     file_path = Column(String)
+    created_at = Column(DateTime)
 
 # Recommendations Table
 class Recommendation(Base):
@@ -64,3 +68,5 @@ class Recommendation(Base):
     id = Column(Integer, primary_key=True)
     building_id = Column(Integer, ForeignKey("buildings.id"))
     suggestion = Column(String)
+    created_at = Column(DateTime)
+    building = relationship("Building")
