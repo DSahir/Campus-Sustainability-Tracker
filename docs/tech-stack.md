@@ -1,0 +1,8 @@
+# Tech Stack Justification
+
+FastAPI is a strong backend fit for this project because it makes it easy to expose clean REST endpoints for dashboards, predictions, alerts, settings, and report delivery while keeping the codebase structured around typed request and response models. Compared with a heavier Python framework like Django, FastAPI gives the team a smaller scaffold and faster iteration cycle for an API-first system. It also pairs naturally with pytest for endpoint testing and can scale into async workloads later if prediction jobs or report generation become more expensive.
+
+React is a pragmatic frontend choice because the product is dashboard-oriented and will benefit from reusable UI components, client-side state management, and a large ecosystem of charting and integration libraries. Recharts is a good companion because it covers the common sustainability-dashboard needs such as trend lines, bar charts, and summary visuals without forcing a complex visualization stack like raw D3 for a student project. Together, React and Recharts let the team move quickly from stubbed APIs to interactive analytics views.
+
+PostgreSQL was chosen over lighter options such as SQLite because the project needs a real relational data store that can handle multiple campuses, buildings, thresholds, alerts, and historical records with dependable querying as the dataset grows. pytest rounds out the stack because it is lightweight, widely used in Python projects, and simple to run in CI for API contract checks and regression coverage. This combination keeps the architecture understandable for the team while still being robust enough for the system requirements already documented.
+
