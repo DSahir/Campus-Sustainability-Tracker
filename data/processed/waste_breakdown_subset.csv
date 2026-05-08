@@ -1,0 +1,26 @@
+building_id,display_name,building_type,campus,waste_category,value
+1,Lederle,research,UMass Amherst,Recyclable,7359.0729
+1,Lederle,research,UMass Amherst,Organic,5228.815
+1,Lederle,research,UMass Amherst,Landfill,3873.1963
+1,Lederle,research,UMass Amherst,Compost,1936.5981
+1,Lederle,research,UMass Amherst,Hazardous,968.2991
+2,Morrill,science,UMass Amherst,Recyclable,7469.1468
+2,Morrill,science,UMass Amherst,Organic,5307.0253
+2,Morrill,science,UMass Amherst,Landfill,3931.1299
+2,Morrill,science,UMass Amherst,Compost,1965.5649
+2,Morrill,science,UMass Amherst,Hazardous,982.7825
+3,Goessmann,chemistry_lab,UMass Amherst,Recyclable,1673.064
+3,Goessmann,chemistry_lab,UMass Amherst,Organic,1188.756
+3,Goessmann,chemistry_lab,UMass Amherst,Landfill,880.56
+3,Goessmann,chemistry_lab,UMass Amherst,Compost,440.28
+3,Goessmann,chemistry_lab,UMass Amherst,Hazardous,220.14
+4,Integrated Sciences,interdisciplinary_science,UMass Amherst,Recyclable,13077.0337
+4,Integrated Sciences,interdisciplinary_science,UMass Amherst,Organic,9291.5766
+4,Integrated Sciences,interdisciplinary_science,UMass Amherst,Landfill,6882.6493
+4,Integrated Sciences,interdisciplinary_science,UMass Amherst,Compost,3441.3247
+4,Integrated Sciences,interdisciplinary_science,UMass Amherst,Hazardous,1720.6623
+5,Recreation Center,recreation,UMass Amherst,Recyclable,725.9521
+5,Recreation Center,recreation,UMass Amherst,Organic,515.808
+5,Recreation Center,recreation,UMass Amherst,Landfill,382.08
+5,Recreation Center,recreation,UMass Amherst,Compost,191.04
+5,Recreation Center,recreation,UMass Amherst,Hazardous,95.52
