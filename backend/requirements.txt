@@ -10,4 +10,5 @@ xgboost
 joblib
 matplotlib
 jupyter
+sqlalchemy
 
