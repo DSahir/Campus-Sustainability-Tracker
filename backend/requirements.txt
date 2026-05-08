@@ -3,4 +3,12 @@ uvicorn[standard]==0.34.2
 pydantic-settings==2.8.1
 pytest==8.3.5
 httpx==0.28.1
+pandas
+numpy
+scikit-learn
+xgboost
+joblib
+matplotlib
+jupyter
+sqlalchemy
 
