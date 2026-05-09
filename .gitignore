@@ -24,4 +24,7 @@ coverage/
 
 # OS files
 .DS_Store
-Thumbs.dbfrontend/.env
+Thumbs.db
+
+# raw datasets
+data/raw/
