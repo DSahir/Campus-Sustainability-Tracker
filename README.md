@@ -17,7 +17,7 @@ The Campus Sustainability Tracker is a web-based platform designed to monitor an
 
 ## Repository Structure
 frontend/ - user interface and dashboards  
-backend/ - APIs, analytics and data processing  
+backend/ - APIs, analytics and data processing (organized under backend/app/{api,core,models,services,ml})  
 docs/ - project documentation  
 data/ - datasets  
 tests/ - testing files  
@@ -25,19 +25,35 @@ scripts/ - automation scripts
 
 ## Scaffolded Stack
 - frontend: React + Vite UI connected to FastAPI
-- backend: FastAPI with stub endpoints
+- backend: FastAPI with database-backed prediction, alerts, recommendations, reports, and settings persistence
 - docker: container setup for full stack
 
-## API Stub Endpoints
+## Backend Build & Run
+1. Change to the backend folder:
+   - `cd backend`
+2. Install dependencies:
+   - `python3 -m pip install --upgrade pip`
+   - `python3 -m pip install -r requirements.txt`
+3. Copy the environment template:
+   - `cp .env.example .env`
+4. Start the backend locally:
+   - `uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000`
+5. Run the backend Docker image:
+   - `docker build -t campus-sustainability-backend .`
+   - `docker run --rm -p 8000:8000 campus-sustainability-backend`
+
+## API Endpoints
 - POST /api/v1/auth/login
 - GET /api/v1/buildings
 - GET /api/v1/metrics/summary
 - GET /api/v1/alerts
 - GET /api/v1/predict
+- GET /api/v1/predict/{building_id}?horizon=7d
 - GET /api/v1/reports
 - GET /api/v1/reports/download
 - GET /api/v1/recommendations
 - GET /api/v1/settings/thresholds
+- PUT /api/v1/settings/thresholds
 
 ## Team Members
 - Dhanshri Ahir

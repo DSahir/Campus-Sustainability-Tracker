@@ -11,4 +11,7 @@ joblib
 matplotlib
 jupyter
 sqlalchemy
+psycopg2-binary
+fpdf
+onnxruntime
 

@@ -1,15 +1,15 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.orm import Session
+
+from backend.app.core.database import get_db
+from backend.app.services.recommendation_service import list_recommendations
 
 router = APIRouter(prefix="/recommendations")
 
 
 @router.get("")
-def list_recommendations() -> dict:
-    return {
-        "items": [
-            "Shift HVAC schedules in Engineering Hall by 30 minutes during low-occupancy periods.",
-            "Install low-flow fixtures in Science Center restrooms.",
-            "Move library lab workloads to off-peak windows to reduce compute energy spikes.",
-        ]
-    }
-
+def list_recommendations_endpoint(
+    building_id: int | None = Query(default=None),
+    db: Session = Depends(get_db),
+) -> dict:
+    return list_recommendations(db=db, building_id=building_id)
