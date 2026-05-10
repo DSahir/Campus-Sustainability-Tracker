@@ -1,4 +1,5 @@
 from functools import lru_cache
+from pathlib import Path
 
 from pydantic import Field
 from pydantic_settings import BaseSettings, SettingsConfigDict
@@ -19,6 +20,20 @@ class Settings(BaseSettings):
             "http://localhost:5173",
         ]
     )
+    model_artifacts_dir: str = str(
+        Path(__file__).resolve().parent.parent / "ml" / "artifacts"
+    )
+    model_artifact_map: dict[str, str] = Field(
+        default_factory=lambda: {
+            "energy": "xgboost_model.joblib",
+            "water": "baseline_model.joblib",
+            "waste": "baseline_model.joblib",
+            "co2": "baseline_model.joblib",
+        }
+    )
+    report_output_dir: str = str(
+        Path(__file__).resolve().parent.parent / "reports_output"
+    )
 
     model_config = SettingsConfigDict(
         env_file=".env",
@@ -26,6 +41,13 @@ class Settings(BaseSettings):
         case_sensitive=False,
         extra="ignore",
     )
+
+    @property
+    def database_url(self) -> str:
+        return (
+            f"postgresql://{self.postgres_user}:{self.postgres_password}"
+            f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"
+        )
 
 
 @lru_cache

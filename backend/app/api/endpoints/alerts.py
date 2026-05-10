@@ -1,26 +1,20 @@
-from fastapi import APIRouter
+from fastapi import APIRouter, Depends, Query
+from sqlalchemy.orm import Session
+
+from backend.app.core.database import get_db
+from backend.app.services.alert_service import get_alerts, get_alerts_for_building
 
 router = APIRouter(prefix="/alerts")
 
 
 @router.get("")
-def list_alerts() -> dict:
-    return {
-        "items": [
-            {
-                "id": "ALT-1001",
-                "building": "Science Center",
-                "severity": "high",
-                "metric": "water",
-                "message": "Water usage exceeded the configured threshold.",
-            },
-            {
-                "id": "ALT-1002",
-                "building": "Engineering Hall",
-                "severity": "medium",
-                "metric": "energy",
-                "message": "Energy demand is trending upward compared to last week.",
-            },
-        ]
-    }
+def list_alerts(
+    building_id: int | None = Query(default=None),
+    db: Session = Depends(get_db),
+) -> dict:
+    if building_id is not None:
+        items = get_alerts_for_building(db, building_id)
+    else:
+        items = get_alerts(db)
+    return {"items": items}
 

@@ -9,7 +9,10 @@ def create_app() -> FastAPI:
     app = FastAPI(
         title="Campus Sustainability Tracker API",
         version="0.1.0",
-        description="Stub API for sustainability monitoring, alerts, predictions, and reports.",
+        description=(
+            "Campus Sustainability Tracker backend API for monitoring, forecasting, "
+            "alerts, and report generation."
+        ),
     )
 
     app.add_middleware(

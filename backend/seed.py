@@ -1,9 +1,8 @@
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
-from models import User, Building, ResourceReading, ResourceType
+from backend.app.models import User, Building, ResourceReading, ResourceType, Recommendation, Setting
 from datetime import datetime, timedelta
 import random
-
 
 DATABASE_URL = "postgresql://user:password@db:5432/sustainability"
 
@@ -23,15 +22,10 @@ session.add_all(users)
 
 # -------- BUILDINGS --------
 building_data = [
-    # UMass Amherst (real)
     {"name": "W.E.B. Du Bois Library", "location": "UMass Amherst"},
     {"name": "Integrated Learning Center (ILC)", "location": "UMass Amherst"},
     {"name": "Lederle Graduate Research Center", "location": "UMass Amherst"},
-
-    # Amherst College (semi-realistic)
     {"name": "Science Center", "location": "Amherst College"},
-
-    # Hampshire College (semi-realistic)
     {"name": "Franklin Patterson Hall", "location": "Hampshire College"},
 ]
 
@@ -51,9 +45,32 @@ for building in buildings:
                 building_id=building.id,
                 type=resource,
                 value=random.uniform(10, 100),
-                ts=datetime.now() - timedelta(days=day)
+                ts=datetime.now() - timedelta(days=day),
             )
             session.add(reading)
+
+session.commit()
+
+# -------- RECOMMENDATIONS --------
+recommendation_items = [
+    (buildings[0].id, "Shift HVAC schedules in Engineering Hall by 30 minutes during low-occupancy periods."),
+    (buildings[1].id, "Install low-flow fixtures in Science Center restrooms."),
+    (buildings[2].id, "Move library lab workloads to off-peak windows to reduce compute energy spikes."),
+]
+for building_id, suggestion in recommendation_items:
+    session.add(Recommendation(building_id=building_id, suggestion=suggestion))
+
+session.commit()
+
+# -------- SETTINGS --------
+thresholds = {
+    "energy_kwh": 6000,
+    "water_gallons": 25000,
+    "waste_kg": 500,
+    "co2_tons": 6.0,
+}
+for key, value in thresholds.items():
+    session.add(Setting(key=key, value=str(value)))
 
 session.commit()
 
