@@ -14,4 +14,4 @@ sqlalchemy
 psycopg2-binary
 fpdf
 onnxruntime
-
+alembic

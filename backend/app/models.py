@@ -1,7 +1,7 @@
 from datetime import datetime
 import enum
 
-from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Integer, String, Text
+from sqlalchemy import Column, DateTime, Enum, Float, ForeignKey, Index, Integer, String, Text
 from sqlalchemy.orm import declarative_base, relationship
 
 Base = declarative_base()
@@ -38,6 +38,10 @@ class Building(Base):
 class ResourceReading(Base):
     __tablename__ = "resource_readings"
 
+    __table_args__ = (
+        Index("idx_resource_readings_building_type_ts", "building_id", "type", "ts"),
+    )
+
     id = Column(Integer, primary_key=True)
     building_id = Column(Integer, ForeignKey("buildings.id"))
     type = Column(Enum(ResourceType), nullable=False)
@@ -45,6 +49,21 @@ class ResourceReading(Base):
     ts = Column(DateTime, default=datetime.utcnow)
 
     building = relationship("Building", back_populates="resource_readings")
+
+
+class Prediction(Base):
+    __tablename__ = "predictions"
+
+    id = Column(Integer, primary_key=True)
+    building_id = Column(Integer, ForeignKey("buildings.id"), nullable=False)
+    type = Column(Enum(ResourceType), nullable=False)
+    ts = Column(DateTime, nullable=False)
+    predicted_value = Column(Float, nullable=False)
+    lower = Column(Float)
+    upper = Column(Float)
+    model_version = Column(String, nullable=False)
+
+    building = relationship("Building")
 
 
 class Alert(Base):
