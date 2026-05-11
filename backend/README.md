@@ -33,6 +33,7 @@ python3 -m pip install -r requirements.txt
 3. Run the backend locally:
 
 ```bash
+export DATABASE_URL=sqlite:///backend/dev.db
 uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
 ```
 
@@ -86,6 +87,7 @@ docker run --rm -p 8000:8000 campus-sustainability-backend
 Run backend tests from the repository root:
 
 ```bash
-cd backend
 pytest
 ```
+
+The test configuration uses `pytest.ini` to configure the `backend` package path and `tests/` directory.

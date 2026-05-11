@@ -116,6 +116,8 @@ def compute_prediction(
         "model_status": model.model_status,
         "resource_type": resource_type.value,
     }
+    if resource_type == ResourceType.energy:
+        result["predicted_energy_kwh"] = round(predicted_value, 2)
 
     if anomaly and building_id is not None:
         create_alert(

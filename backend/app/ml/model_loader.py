@@ -23,8 +23,15 @@ class ModelArtifact:
         self.model = model
         self.source_path = source_path
         self.resource_type = resource_type
-        self.model_status = f"{resource_type.value}_model"
         self.is_onnx = source_path.suffix.lower() == ".onnx"
+
+        artifact_name = source_path.name.lower()
+        if "xgboost" in artifact_name:
+            self.model_status = "xgboost_live"
+        elif "baseline" in artifact_name:
+            self.model_status = f"{resource_type.value}_baseline"
+        else:
+            self.model_status = f"{resource_type.value}_model"
 
     def predict(self, features: dict[str, float]) -> float:
         values = pd.DataFrame([features])

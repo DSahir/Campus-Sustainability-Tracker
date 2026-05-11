@@ -11,4 +11,4 @@ def detect_anomaly(current_value, historical_values):
 
     z_score = (current_value - mean) / std
 
-    return abs(z_score) > 2.5
+    return bool(abs(z_score) > 2.5)
