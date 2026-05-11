@@ -10,6 +10,8 @@ COPY scripts ./scripts
 COPY data/processed ./data/processed
 COPY alembic ./alembic
 COPY alembic.ini ./alembic.ini
+COPY tests ./tests
+COPY pytest.ini ./pytest.ini
 COPY .env ./.env
 
 EXPOSE 8000
