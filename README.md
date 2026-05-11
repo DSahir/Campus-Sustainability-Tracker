@@ -38,9 +38,15 @@ scripts/ - automation scripts
    - `cp .env.example .env`
 4. Start the backend locally:
    - `uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000`
+   - For local development without PostgreSQL, set `DATABASE_URL=sqlite:///backend/dev.db`
 5. Run the backend Docker image:
    - `docker build -t campus-sustainability-backend .`
    - `docker run --rm -p 8000:8000 campus-sustainability-backend`
+
+## Local Test Execution
+- From the repository root:
+  - `pytest`
+- The project uses `pytest.ini` to add `backend` to Python path and run tests from `tests/`
 
 ## API Endpoints
 - POST /api/v1/auth/login

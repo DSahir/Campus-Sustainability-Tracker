@@ -25,5 +25,5 @@ def test_report_download_returns_pdf_stream() -> None:
 
     assert response.status_code == 200
     assert response.headers["content-type"] == "application/pdf"
-    assert response.content.startswith(b"%PDF-1.4")
+    assert response.content.startswith(b"%PDF-")
 

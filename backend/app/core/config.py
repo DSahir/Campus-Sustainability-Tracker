@@ -20,6 +20,7 @@ class Settings(BaseSettings):
             "http://localhost:5173",
         ]
     )
+    database_url: str | None = Field(default=None, env="DATABASE_URL")
     model_artifacts_dir: str = str(
         Path(__file__).resolve().parent.parent / "ml" / "artifacts"
     )
@@ -43,7 +44,10 @@ class Settings(BaseSettings):
     )
 
     @property
-    def database_url(self) -> str:
+    def resolved_database_url(self) -> str:
+        if self.database_url:
+            return self.database_url
+
         return (
             f"postgresql://{self.postgres_user}:{self.postgres_password}"
             f"@{self.postgres_host}:{self.postgres_port}/{self.postgres_db}"

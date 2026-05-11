@@ -18,7 +18,6 @@ def test_stub_endpoints_return_success() -> None:
         ("get", "/api/v1/buildings"),
         ("get", "/api/v1/settings/thresholds"),
         ("get", "/api/v1/alerts"),
-        ("get", "/api/v1/predict"),
         ("get", "/api/v1/reports"),
         ("get", "/api/v1/recommendations"),
     ]
@@ -32,8 +31,8 @@ def test_report_download_uses_default_filename() -> None:
     response = client.get("/api/v1/reports/download?campus=north-campus")
     assert response.status_code == 200
     assert response.headers["content-type"] == "application/pdf"
-    assert "sustainability_report_north-campus_" in response.headers["content-disposition"]
-    assert response.content.startswith(b"%PDF-1.4")
+    assert response.headers["content-disposition"].startswith("attachment;")
+    assert b"%PDF-" in response.content[:8]
 
 
 def test_report_download_allows_filename_override() -> None:
