@@ -28,7 +28,11 @@ scripts/ - automation scripts
 - backend: FastAPI with database-backed prediction, alerts, recommendations, reports, and settings persistence
 - docker: container setup for full stack
 
-## Backend Build & Run
+## Build ## Backend Build & Run Deployment
+
+For comprehensive build and deployment instructions, see [BUILD.md](BUILD.md).
+
+## Backend Build ## Backend Build & Run Run
 1. Change to the backend folder:
    - `cd backend`
 2. Install dependencies:
