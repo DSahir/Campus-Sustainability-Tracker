@@ -84,20 +84,22 @@ export default function DashboardPage() {
         <section className="grid gap-5 md:grid-cols-2 xl:grid-cols-3">
           <KPICard
             title="Energy Usage"
-            value={data.summary.energy}
-            change={data.summary.energyChange}
+            value={data.summary.energyUsage}
+            change={12}
             unit="kWh"
           />
+
           <KPICard
             title="Water Usage"
-            value={data.summary.water}
-            change={data.summary.waterChange}
+            value={data.summary.waterUsage}
+            change={8}
             unit="gal"
           />
+
           <KPICard
             title="CO₂ Emissions"
-            value={data.summary.co2}
-            change={data.summary.co2Change}
+            value={data.summary.co2Emissions}
+            change={5}
             unit="kg"
           />
         </section>
@@ -404,13 +406,14 @@ export default function DashboardPage() {
               </div>
 
               <div className="mt-5 flex justify-end">
-                <a
-                  href="http://localhost:8000/api/v1/reports"
-                  download
+                <button
+                  onClick={() => {
+                    window.open("http://localhost:8000/api/v1/reports/download", "_blank");
+                  }}
                   className="rounded-xl bg-brand-600 px-5 py-3 text-center text-sm font-semibold text-white shadow-soft transition hover:bg-brand-700 dark:bg-emerald-600 dark:hover:bg-emerald-500"
                 >
                   Download Report
-                </a>
+                </button>
               </div>
             </Card>
           </section>

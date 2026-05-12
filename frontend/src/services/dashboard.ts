@@ -1,37 +1,39 @@
 import axios from "axios";
-import type { DashboardResponse } from "../types/api";
-import { mockDashboardData } from "../__mocks__/mockData";
 
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const USE_MOCKS = import.meta.env.VITE_USE_MOCKS === "true";
+const API = "http://localhost:8000/api/v1";
 
-export const dashboardApi = axios.create({
-  baseURL: API_BASE_URL
-});
+export const getDashboardSummary = async () => {
+  const trends = await axios.get(`${API}/analytics/trends`);
 
-export async function getDashboardData(token: string): Promise<DashboardResponse> {
-  if (USE_MOCKS) {
-    await new Promise((resolve) => setTimeout(resolve, 300));
-    return mockDashboardData;
-  }
-
-  const headers = {
-    Authorization: `Bearer ${token}`
+  const latest = trends.data[trends.data.length - 1] || {
+    actualEnergy: 0,
+    water: 0,
+    co2: 0,
   };
-
-  const [summaryRes, buildingsRes, alertsRes] = await Promise.all([
-    dashboardApi.get("/api/metrics/summary", { headers }),
-    dashboardApi.get("/api/buildings", { headers }),
-    dashboardApi.get("/api/alerts/active", { headers })
-  ]);
 
   return {
-    summary: summaryRes.data.summary ?? summaryRes.data,
-    trends: summaryRes.data.trends ?? [],
-    buildingComparison: summaryRes.data.buildingComparison ?? [],
-    wasteBreakdown: summaryRes.data.wasteBreakdown ?? [],
-    alerts: alertsRes.data.alerts ?? alertsRes.data,
-    buildings: buildingsRes.data.buildings ?? buildingsRes.data,
-    recommendations: summaryRes.data.recommendations ?? []
+    energy: latest.actualEnergy,
+    water: latest.water,
+    co2: latest.co2,
   };
-}
+};
+
+export const getBuildingComparison = async () => {
+  const response = await axios.get(`${API}/analytics/buildings`);
+  return response.data;
+};
+
+export const getTrendData = async () => {
+  const response = await axios.get(`${API}/analytics/trends`);
+  return response.data;
+};
+
+export const getWasteBreakdown = async () => {
+  const response = await axios.get(`${API}/analytics/waste`);
+  return response.data;
+};
+
+export const getRecommendations = async () => {
+  const response = await axios.get(`${API}/analytics/recommendations`);
+  return response.data;
+};

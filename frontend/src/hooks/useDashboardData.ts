@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import type { DashboardResponse } from "../types/api";
-import { getDashboardData } from "../services/dashboard";
+import {
+  getDashboardSummary,
+  getBuildingComparison,
+  getTrendData,
+  getWasteBreakdown,
+  getRecommendations,
+} from "../services/dashboard";
 
 interface UseDashboardDataResult {
   data: DashboardResponse | null;
@@ -24,7 +30,34 @@ export function useDashboardData(token: string | null): UseDashboardDataResult {
       try {
         setLoading(true);
         setError(null);
-        const result = await getDashboardData(token);
+
+        const [
+          summary,
+          buildingComparison,
+          trends,
+          wasteBreakdown,
+          recommendations,
+        ] = await Promise.all([
+          getDashboardSummary(),
+          getBuildingComparison(),
+          getTrendData(),
+          getWasteBreakdown(),
+          getRecommendations(),
+        ]);
+
+        const result: DashboardResponse = {
+          summary: {
+            energyUsage: summary.energy,
+            waterUsage: summary.water,
+            co2Emissions: summary.co2,
+          },
+          buildingComparison,
+          trends,
+          wasteBreakdown,
+          recommendations,
+          alerts: [],
+        };
+
         setData(result);
       } catch (err) {
         setError("Failed to load dashboard data.");

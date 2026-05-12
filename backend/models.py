@@ -59,6 +59,7 @@ class Report(Base):
     id = Column(Integer, primary_key=True)
     generated_by = Column(Integer, ForeignKey("users.id"))
     file_path = Column(String)
+    campus = Column(String)   # <-- add this line
     created_at = Column(DateTime)
 
 # Recommendations Table

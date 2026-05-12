@@ -3,6 +3,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from backend.app.api.routes import router as api_router
 from backend.app.core.config import settings
+from backend.app.api.endpoints import analytics
 
 
 def create_app() -> FastAPI:
@@ -28,6 +29,8 @@ def create_app() -> FastAPI:
         return {"status": "ok"}
 
     app.include_router(api_router, prefix=settings.api_prefix)
+    app.include_router(analytics.router, prefix="/api/v1")
+
     return app
 
 
