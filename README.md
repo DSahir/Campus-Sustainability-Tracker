@@ -64,49 +64,83 @@ docker/      - Docker-related frontend configuration
 - **Testing and DevOps:** pytest, httpx, Docker Compose, GitHub CI
 - **Reporting:** FPDF and backend report generation service
 
-## Build and Deployment
+## Build and Run Instructions
 
 For comprehensive build and deployment instructions, see [BUILD.md](BUILD.md).
 
+### Prerequisites
+
+Before running the project locally, install:
+
+- Python 3.10 or newer, recommended: Python 3.11
+- Node.js 18 or newer
+- npm
+- Docker and Docker Compose, optional for containerized setup
+
 ## Backend Build and Run
 
-1. Change to the backend folder:
+Run the backend from the repository root so Python can import the `backend` package correctly.
+
+1. Create and activate a virtual environment:
 
    ```bash
-   cd backend
+   python3.11 -m venv backend/venv
+   source backend/venv/bin/activate
    ```
 
 2. Install dependencies:
 
    ```bash
-   python3 -m pip install --upgrade pip
-   python3 -m pip install -r requirements.txt
+   python -m pip install --upgrade pip
+   python -m pip install -r backend/requirements.txt
    ```
 
-3. Copy the environment template:
+3. Copy the environment template if available:
 
    ```bash
-   cp .env.example .env
+   cp backend/.env.example backend/.env
    ```
 
-4. Start the backend locally:
-
-   ```bash
-   uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
-   ```
-
-   For local development without PostgreSQL, set:
+4. For local development without PostgreSQL, set a SQLite database URL:
 
    ```bash
    export DATABASE_URL=sqlite:///backend/dev.db
    ```
 
-5. Run the backend Docker image:
+5. Start the backend locally:
 
    ```bash
-   docker build -t campus-sustainability-backend .
-   docker run --rm -p 8000:8000 campus-sustainability-backend
+   python -m uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
    ```
+
+6. The backend will run at:
+
+   ```text
+   http://127.0.0.1:8000
+   ```
+
+7. Useful backend URLs:
+
+   ```text
+   Health check: http://127.0.0.1:8000/health
+   API base URL: http://127.0.0.1:8000/api/v1
+   ```
+
+## Frontend Build and Run
+
+Open a second terminal and run the frontend from the `frontend` directory:
+
+```bash
+cd frontend
+npm install
+npm run dev
+```
+
+The frontend will run at:
+
+```text
+http://localhost:5173
+```
 
 ## Full Stack with Docker
 
@@ -122,6 +156,15 @@ Default local services:
 - Backend API: `http://localhost:8000/api/v1`
 - Backend health check: `http://localhost:8000/health`
 - PostgreSQL: `localhost:5432`
+
+## Backend Docker Build
+
+From the repository root, run:
+
+```bash
+docker build -t campus-sustainability-backend -f backend/Dockerfile .
+docker run --rm -p 8000:8000 campus-sustainability-backend
+```
 
 ## Data Loading
 
@@ -167,6 +210,48 @@ Test coverage includes authentication, prediction, alerts, reports, settings, re
 - `PUT /api/v1/settings/thresholds`
 - `GET /health`
 
+## Troubleshooting
+
+### Backend import error
+
+If you see an error such as:
+
+```text
+ModuleNotFoundError: No module named 'backend'
+```
+
+make sure you are running the backend command from the repository root, not from inside the `backend` folder:
+
+```bash
+python -m uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
+```
+
+### Python version error
+
+If you see an error related to syntax such as:
+
+```text
+TypeError: unsupported operand type(s) for |: 'type' and 'NoneType'
+```
+
+you are likely using Python 3.9 or older. Use Python 3.10 or newer, preferably Python 3.11:
+
+```bash
+python3.11 -m venv backend/venv
+source backend/venv/bin/activate
+```
+
+### Frontend dependency issues
+
+If the frontend does not start, reinstall dependencies:
+
+```bash
+cd frontend
+rm -rf node_modules package-lock.json
+npm install
+npm run dev
+```
+
 ## Future Enhancements
 
 - Real-time data ingestion from smart meters and building management systems
@@ -174,7 +259,7 @@ Test coverage includes authentication, prediction, alerts, reports, settings, re
 - Ensemble machine-learning models for improved time-series predictions
 - Email and SMS alert notifications
 - Excel export and configurable dashboard widgets
-- Carbon pricing, scorecards, and sustainability benchmarking
+- Carbon pricing, scorecards and sustainability benchmarking
 
 ## Team Members
 
