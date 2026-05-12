@@ -53,34 +53,47 @@ backend/
 
 ## Local Development
 
-1. Copy the environment template:
+Run backend commands from the repository root so Python can import the `backend` package correctly.
+
+1. Create and activate a virtual environment:
 
    ```bash
-   cd backend
-   cp .env.example .env
+   python3.11 -m venv backend/venv
+   source backend/venv/bin/activate
    ```
 
-2. Install Python dependencies:
+2. Copy the environment template if available:
 
    ```bash
-   python3 -m pip install --upgrade pip
-   python3 -m pip install -r requirements.txt
+   cp backend/.env.example backend/.env
    ```
 
-3. Run the backend locally:
+3. Install Python dependencies:
+
+   ```bash
+   python -m pip install --upgrade pip
+   python -m pip install -r backend/requirements.txt
+   ```
+
+4. For local development without PostgreSQL, set a SQLite database URL:
 
    ```bash
    export DATABASE_URL=sqlite:///backend/dev.db
-   uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
    ```
 
-4. The API will be available at:
+5. Run the backend locally:
+
+   ```bash
+   python -m uvicorn backend.app.main:app --reload --host 0.0.0.0 --port 8000
+   ```
+
+6. The API will be available at:
 
    ```text
    http://localhost:8000/api/v1
    ```
 
-5. The health check will be available at:
+7. The health check will be available at:
 
    ```text
    http://localhost:8000/health
