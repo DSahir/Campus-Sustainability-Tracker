@@ -6,6 +6,13 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 
 class Settings(BaseSettings):
+    """
+    Application configuration loaded from environment variables.
+
+    This keeps database, model, and report settings separate from source code
+    so the backend can run in local, Docker, and production environments.
+    """
+    
     api_prefix: str = "/api/v1"
     app_env: str = "development"
     project_name: str = "Campus Sustainability Tracker"
