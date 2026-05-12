@@ -1,7 +1,10 @@
 # dependencies
 node_modules/
+frontend/node_modules/
 dist/
 dist-ssr/
+frontend/dist/
+frontend/dist-ssr/
 
 # env files
 .env
@@ -10,13 +13,37 @@ dist-ssr/
 backend/.env
 frontend/.env
 
-# python
+# python virtual environments
+venv/
+.venv/
+backend/venv/
+backend/.venv/
+
+# python cache/build files
 __pycache__/
 *.pyc
+*.pyo
+*.pyd
 .pytest_cache/
+.mypy_cache/
+.ruff_cache/
+*.egg-info/
+build/
 
-# testing
+# testing/coverage
 coverage/
+htmlcov/
+.coverage
+
+# local database files
+*.sqlite
+*.sqlite3
+backend/dev.db
+backend/*.db
+
+# generated reports/output
+reports_output/
+backend/reports_output/
 
 # editors
 .vscode/
